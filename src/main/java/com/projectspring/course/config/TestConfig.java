@@ -18,7 +18,6 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     public TestConfig(IUserRepository userRepository) { this.userRepository = userRepository; }
 
-
     @Override
     public void run(String... args) throws Exception {
         User user1 = new User(null,"Maria Brown", "maria@gmail.com", "988888888","123456");
