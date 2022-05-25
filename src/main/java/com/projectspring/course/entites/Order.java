@@ -1,7 +1,7 @@
 package com.projectspring.course.entites;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.projectspring.course.entites.enums.OrderStatus;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,12 +34,15 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private User client;
 
+    private Integer orderStatus;
+
     public Order() { }
 
-    public Order(Long id, Instant instant, User client) {
+    public Order(Long id, Instant instant, User client, OrderStatus orderStatus) {
         this.id = id;
         this.instant = instant;
         this.client = client;
+        this.orderStatus = orderStatus.getOrder();
     }
 
     public Long getId() { return id; }
@@ -52,6 +55,10 @@ public class Order implements Serializable {
     public User getClient() { return client; }
 
     public void setClient(User client) { this.client = client; }
+
+    public OrderStatus getOrderStatus() { return OrderStatus.statusOf(orderStatus); }
+
+    public void setOrderStatus(OrderStatus orderStatus) { this.orderStatus = orderStatus.get; }
 
     @Override
     public boolean equals(Object o) {
