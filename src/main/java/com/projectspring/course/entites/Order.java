@@ -28,7 +28,7 @@ public class Order implements Serializable {
             pattern = "yyyy-MM-dd 'T'HH:mm:ss'Z'",
             timezone = "GMT"
     )
-    private Instant instant;
+    private Instant moment;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -38,19 +38,19 @@ public class Order implements Serializable {
 
     public Order() { }
 
-    public Order(Long id, Instant instant, User client, OrderStatus orderStatus) {
+    public Order(Long id, Instant moment, User client, OrderStatus orderStatus) {
         this.id = id;
-        this.instant = instant;
+        this.moment = moment;
         this.client = client;
-        this.orderStatus = orderStatus.getOrder();
+        setOrderStatus(orderStatus);
     }
 
     public Long getId() { return id; }
 
 
-    public Instant getInstant() { return instant; }
+    public Instant getMoment() { return moment; }
 
-    public void setInstant(Instant instant) { this.instant = instant; }
+    public void setMoment(Instant instant) { this.moment = instant; }
 
     public User getClient() { return client; }
 
@@ -58,7 +58,7 @@ public class Order implements Serializable {
 
     public OrderStatus getOrderStatus() { return OrderStatus.statusOf(orderStatus); }
 
-    public void setOrderStatus(OrderStatus orderStatus) { this.orderStatus = orderStatus.get; }
+    public void setOrderStatus(OrderStatus orderStatus) { this.orderStatus = orderStatus.getOrder(); }
 
     @Override
     public boolean equals(Object o) {
