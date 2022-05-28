@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.io.Serializable;
@@ -24,8 +27,12 @@ public class Product implements Serializable {
     private Double price;
     private String imageUrl;
 
-    @Transient
-    private Set<Category> categories = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private final Set<Category> categories = new HashSet<>();
 
     public Product() { }
 
@@ -46,11 +53,20 @@ public class Product implements Serializable {
 
     public String getDescription() { return description; }
 
+    public String getImageUrl() { return imageUrl; }
+
+    public Set<Category> getCategories() { return categories; }
+
     public void setId(Long id) { this.id = id; }
 
     public void setName(String name) { this.name = name; }
 
     public void setPrice(Double price) { this.price = price; }
+
+    public void setDescription(String description) { this.description = description; }
+
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+
 
     @Override
     public boolean equals(Object o) {
