@@ -9,10 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -36,6 +39,10 @@ public class Order implements Serializable {
 
     private Integer orderStatus;
 
+
+    @OneToMany(mappedBy = "id.order")
+    private final Set<OrderItem> items = new HashSet<>();
+
     public Order() { }
 
     public Order(Long id, Instant moment, User client, OrderStatus orderStatus) {
@@ -47,12 +54,13 @@ public class Order implements Serializable {
 
     public Long getId() { return id; }
 
-
     public Instant getMoment() { return moment; }
 
     public void setMoment(Instant instant) { this.moment = instant; }
 
     public User getClient() { return client; }
+
+    public Set<OrderItem> getItems() { return items; }
 
     public void setClient(User client) { this.client = client; }
 

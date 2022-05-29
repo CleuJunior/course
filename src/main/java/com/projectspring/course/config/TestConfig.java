@@ -2,10 +2,12 @@ package com.projectspring.course.config;
 
 import com.projectspring.course.entites.Category;
 import com.projectspring.course.entites.Order;
+import com.projectspring.course.entites.OrderItem;
 import com.projectspring.course.entites.Product;
 import com.projectspring.course.entites.User;
 import com.projectspring.course.entites.enums.OrderStatus;
 import com.projectspring.course.repositories.ICategoryRepository;
+import com.projectspring.course.repositories.IOrderItemRepository;
 import com.projectspring.course.repositories.IOrderRepository;
 import com.projectspring.course.repositories.IProductRepository;
 import com.projectspring.course.repositories.IUserRepository;
@@ -24,20 +26,23 @@ public class TestConfig implements CommandLineRunner {
     private final IUserRepository userRepository;
     private final IOrderRepository orderRepository;
     private final ICategoryRepository categoryRepository;
-
     private final IProductRepository productRepository;
+
+    private final IOrderItemRepository orderItemRepository;
 
     @Autowired
     public TestConfig(
             IUserRepository userRepository,
             IOrderRepository orderRepository,
             ICategoryRepository categoryRepository,
-            IProductRepository productRepository) {
+            IProductRepository productRepository,
+            IOrderItemRepository orderItemRepository) {
 
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
     @Override
@@ -78,7 +83,16 @@ public class TestConfig implements CommandLineRunner {
 
         this.orderRepository.saveAll(Arrays.asList(order1, order2, order3));
 
+        OrderItem orderItemExample1 = new OrderItem(order1, p1, 2, p1.getPrice());
+        OrderItem orderItemExample2 = new OrderItem(order1, p3, 1, p3.getPrice());
+        OrderItem orderItemExample3 = new OrderItem(order2, p3, 2, p3.getPrice());
+        OrderItem orderItemExample4 = new OrderItem(order3, p5, 2, p5.getPrice());
 
+        this.orderItemRepository.saveAll(Arrays.asList(
+                orderItemExample1,
+                orderItemExample2,
+                orderItemExample3,
+                orderItemExample4));
 
     }
 }
