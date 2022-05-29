@@ -3,6 +3,7 @@ package com.projectspring.course.config;
 import com.projectspring.course.entites.Category;
 import com.projectspring.course.entites.Order;
 import com.projectspring.course.entites.OrderItem;
+import com.projectspring.course.entites.Payment;
 import com.projectspring.course.entites.Product;
 import com.projectspring.course.entites.User;
 import com.projectspring.course.entites.enums.OrderStatus;
@@ -94,5 +95,10 @@ public class TestConfig implements CommandLineRunner {
                 orderItemExample3,
                 orderItemExample4));
 
+        Payment paymentExample1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), order1);
+
+        order1.setPayment(paymentExample1);
+
+        this.orderRepository.save(order1);
     }
 }
