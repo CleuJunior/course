@@ -27,7 +27,6 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
-
     public Integer getQuantity() { return quantity; }
 
     public Double getPrice() { return price; }

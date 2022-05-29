@@ -1,5 +1,7 @@
 package com.projectspring.course.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.io.Serializable;
@@ -34,6 +37,9 @@ public class Product implements Serializable {
     )
     private final Set<Category> categories = new HashSet<>();
 
+    @OneToMany(mappedBy = "id.product")
+    private final Set<OrderItem> items = new HashSet<>();
+
     public Product() { }
 
     public Product(Long id, String name, String description, Double price, String imageUrl) {
@@ -56,6 +62,15 @@ public class Product implements Serializable {
     public String getImageUrl() { return imageUrl; }
 
     public Set<Category> getCategories() { return categories; }
+
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> set = new HashSet<>();
+
+        for (OrderItem item : items) { set.add(item.getOrder()); }
+
+        return set;
+    }
 
     public void setId(Long id) { this.id = id; }
 
