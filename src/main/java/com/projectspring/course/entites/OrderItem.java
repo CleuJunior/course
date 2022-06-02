@@ -36,6 +36,8 @@ public class OrderItem implements Serializable {
 
     public Product getProduct() { return id.getProduct(); }
 
+    public Double getSubTotal() { return price * quantity; }
+
     public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
     public void setPrice(Double price) { this.price = price; }

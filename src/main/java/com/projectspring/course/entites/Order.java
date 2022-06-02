@@ -68,6 +68,14 @@ public class Order implements Serializable {
 
     public Payment getPayment() { return payment; }
 
+    public Double getTotal() {
+        double sum = 0.0;
+        for (OrderItem item : items) {
+            sum += item.getSubTotal();
+        }
+        return sum;
+    }
+
     public void setClient(User client) { this.client = client; }
 
     public OrderStatus getOrderStatus() { return OrderStatus.statusOf(orderStatus); }
